@@ -1,0 +1,35 @@
+# Ignorar arquivos de ambiente
+.env
+
+# Ignorar configurações do banco de dados
+appsettings.json
+appsettings.Development.json
+
+# Ignorar diretório de compilação e arquivos binários
+bin/
+obj/
+
+# Ignorar configurações específicas do usuário da IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignorar logs e arquivos de depuração
+*.log
+
+# Ignorar arquivos de cache e backup
+*.bak
+*.tmp
+
+# Ignorar arquivos de cache do Visual Studio
+.vs/
+
+# Ignorar pacotes NuGet e arquivos de lock de pacotes
+packages/
+project.lock.json
+
+# Ignorar arquivos de banco de dados do Visual Studio
+*.dbmdl
