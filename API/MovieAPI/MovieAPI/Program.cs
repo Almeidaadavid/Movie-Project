@@ -82,6 +82,12 @@ namespace MovieAPI {
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(app => {
+                app.AllowAnyOrigin();
+                app.AllowAnyMethod();
+                app.AllowAnyHeader();
+            });
+
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

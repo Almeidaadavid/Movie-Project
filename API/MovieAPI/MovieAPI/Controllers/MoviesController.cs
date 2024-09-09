@@ -18,24 +18,55 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMovies([FromQuery] string query, int page) {
-            //TODO: Corrigir retorno dos dados, pois aqui está retornando todas as infos de retorno da API para o usuário. (Criar DTO para o retorno de tela).
-            MovieSearchResponse? result = await _movieService.SearchMoviesAsync(query, page);
+        public async Task<IActionResult> GetMovies([FromQuery] string query) {
+            MovieSearchResponse? result = await _movieService.SearchMoviesAsync(query);
             if (result == null) {
                 return NotFound();
             }
-            return Ok(result);
+            List<MovieDetailDTO> lstMovieDetailDTO = result.Results.ConvertAll(x => new MovieDetailDTO {
+                MovieId = x.Id,
+                Title = x.Title,
+                Description = x.Overview,
+                PosterPath = x.PosterPath
+            });
+
+            return Ok(lstMovieDetailDTO);
         }
 
         [HttpGet]
         [Route("GetAllMovies")]
         public async Task<IActionResult> GetMovies() {
-            //TODO: Corrigir retorno dos dados, pois aqui está retornando todas as infos de retorno da API para o usuário. (Criar DTO para o retorno de tela).
             MovieSearchResponse? result = await _movieService.SearchPopularMoviesAsync();
             if (result == null) {
                 return NotFound();
             }
-            return Ok(result);
+            List<MovieDetailDTO> lstMovieDetailDTO = result.Results.ConvertAll(x => new MovieDetailDTO {
+                MovieId = x.Id,
+                Title = x.Title,
+                Description = x.Overview,
+                PosterPath = x.PosterPath
+            });
+            return Ok(lstMovieDetailDTO);
+        }
+
+        [HttpGet]
+        [Route("GetMovieDetails/{MovieID}")]
+        public async Task<IActionResult> GetMovieDetails(int MovieID) {
+            MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(MovieID);
+            if (movieDetails == null) {
+                return NotFound();
+            }
+            MovieDetailDTO movieDetailDTO = new MovieDetailDTO {
+                MovieId = movieDetails.Id,
+                Title = movieDetails.Title,
+                Description = movieDetails.Overview,
+                PosterPath = movieDetails.PosterPath,
+                Rating = movieDetails.VoteAverage,
+                Date = movieDetails.ReleaseDate,
+                Budget = movieDetails.Budget.ToString("N0"),
+                BackdropPath = movieDetails.BackdropPath
+            };
+            return Ok(movieDetailDTO);
         }
     }
 }
