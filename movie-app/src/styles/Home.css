@@ -1,0 +1,9 @@
+.home-container {
+    padding: 16px;
+  }
+  
+  .home-title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    font-weight: bold;
+  }

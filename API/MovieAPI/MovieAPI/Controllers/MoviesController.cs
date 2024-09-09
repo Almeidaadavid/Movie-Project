@@ -24,7 +24,7 @@ namespace MovieAPI.Controllers {
                 return NotFound();
             }
             List<MovieDetailDTO> lstMovieDetailDTO = result.Results.ConvertAll(x => new MovieDetailDTO {
-                MovieId = x.Id,
+                Id = x.Id,
                 Title = x.Title,
                 Description = x.Overview,
                 PosterPath = x.PosterPath
@@ -41,7 +41,7 @@ namespace MovieAPI.Controllers {
                 return NotFound();
             }
             List<MovieDetailDTO> lstMovieDetailDTO = result.Results.ConvertAll(x => new MovieDetailDTO {
-                MovieId = x.Id,
+                Id = x.Id,
                 Title = x.Title,
                 Description = x.Overview,
                 PosterPath = x.PosterPath
@@ -57,7 +57,7 @@ namespace MovieAPI.Controllers {
                 return NotFound();
             }
             MovieDetailDTO movieDetailDTO = new MovieDetailDTO {
-                MovieId = movieDetails.Id,
+                Id = movieDetails.Id,
                 Title = movieDetails.Title,
                 Description = movieDetails.Overview,
                 PosterPath = movieDetails.PosterPath,

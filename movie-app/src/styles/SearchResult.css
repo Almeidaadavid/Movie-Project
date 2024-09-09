@@ -1,0 +1,23 @@
+.search-results-page {
+    padding: 16px;
+  }
+  
+  .search-results-page h1 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .movie-grid .movie-card {
+    flex: 1 1 calc(33% - 32px);
+    margin: 8px;
+  }
+  
+  .movie-grid .movie-card:nth-of-type(odd) {
+    margin-right: 16px;
+  }

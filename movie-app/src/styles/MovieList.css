@@ -1,0 +1,12 @@
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .movie-list .movie-card {
+    max-width: 345px;
+    margin: 10px;
+  }
