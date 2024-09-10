@@ -38,3 +38,8 @@ export const searchMovies = async (query: string): Promise<MovieDetailDTO[]> => 
     const response = await api.delete(`/favoritemovie/deletefavoritemovie/${movieId}`);
     return response.data;
   };
+
+  export const getFavoriteMovies = async(): Promise<MovieDetailDTO[]> => {
+    const response = await api.get('/favoritemovie/getfavoritemovies');
+    return response.data;
+  }

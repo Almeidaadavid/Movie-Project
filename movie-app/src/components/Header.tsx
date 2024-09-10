@@ -59,6 +59,7 @@ const Header: React.FC = () => {
         {user ? (
           <>
             <span className="nav-link">Hello, {user}</span>
+            <Link to={"/favorites"} className="nav-link">Favoritos</Link>
             <Link to={"/"} onClick={handleLogout} className="nav-link">Sair</Link>
           </>
         ) : (

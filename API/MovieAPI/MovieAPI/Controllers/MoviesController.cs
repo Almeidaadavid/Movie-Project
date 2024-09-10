@@ -27,7 +27,8 @@ namespace MovieAPI.Controllers {
                 Id = x.Id,
                 Title = x.Title,
                 Description = x.Overview,
-                PosterPath = x.PosterPath
+                PosterPath = x.PosterPath,
+                Rating = x.VoteAverage
             });
 
             return Ok(lstMovieDetailDTO);
@@ -44,7 +45,8 @@ namespace MovieAPI.Controllers {
                 Id = x.Id,
                 Title = x.Title,
                 Description = x.Overview,
-                PosterPath = x.PosterPath
+                PosterPath = x.PosterPath,
+                Rating = x.VoteAverage
             });
             return Ok(lstMovieDetailDTO);
         }

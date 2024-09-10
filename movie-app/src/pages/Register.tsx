@@ -26,12 +26,12 @@ const Register: React.FC = () => {
     setError('');
 
     if (!validateEmail(email)) {
-        setError('Email inválido');
+        toast.error('Email inválido');
         return;
     }
 
     if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres');
+      toast.error('A senha deve ter pelo menos 6 caracteres');
       setIsLoading(false);
       return;
     }

@@ -1,12 +1,11 @@
 .movie-card {
-  width: 300px;
-  height: 400px;
-  margin: 16px;
+  width: 300px !important; 
+  height: 400px !important;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: relative !important;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -18,37 +17,62 @@
 
 .movie-card img {
   width: 100%;
-  height: 60%;
+  height: 100%;
   object-fit: cover;
+  position:relative;
+  opacity: 1;
 }
 
 .movie-card-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 16px;
-  background-color: #f8f8f8;
+  justify-content: end;
+  padding:10px;
+  position:absolute;
+  bottom:0;
+  height:200px;
+  background:linear-gradient(#00000000, #000000 90%);
+  width:100% !important;
+}
+
+.movie-card-content:hover {
+  cursor: pointer;
+}
+
+.movie-card-content:hover .movie-card img {
+  opacity: 0.5;
+}
+
+.movie-card-content:hover .movie-description {
+  opacity: 1;
+  height: 55px !important;
+  width: 95% !important;
 }
 
 .movie-title {
-  font-size: 1.1rem;
+  font-size: 15px !important;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #333;
+  color: #f1f5f9;
+  width: 90%;
+  margin-bottom: 6px;
 }
 
 .movie-description {
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 12px !important;
+  color: #f1f5f9;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   margin-top: 8px;
+  height:0px;
+  opacity: 0;
+  transition: all 0.6s;
 }
 
 .favorite-button {
@@ -71,8 +95,14 @@
   color: grey
 }
 
+.more-info {
+  color: grey;
+}
+
 .action-buttons {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position:absolute;
+  width:100%;
 }

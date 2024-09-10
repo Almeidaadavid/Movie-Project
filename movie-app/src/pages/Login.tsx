@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { performLogin } from '../services/loginService';
 import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +19,7 @@ const Login: React.FC = () => {
     setIsLoading(true);
     
     if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres');
+      toast.error('A senha deve ter pelo menos 6 caracteres');
       setIsLoading(false);
       return;
     }

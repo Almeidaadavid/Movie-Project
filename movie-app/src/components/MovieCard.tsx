@@ -7,6 +7,8 @@ import '../styles/MovieCard.css';
 import { useFavorites } from '../context/FavoriteContext';
 import { getMovieDetails } from '../services/movieService';
 import MovieDetailModal from './ModalMovieDetail';
+import StarRating from './StarRating';
+import { CardFooter } from 'reactstrap';
 
 interface MovieCardProps {
   movie: MovieDetailDTO;
@@ -18,7 +20,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onToggleFavorite, isUserLo
   const { favorites } = useFavorites();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [movieDetails, setMovieDetails] = useState<MovieDetailDTO | null>(null);
-
   const isFavorite = isUserLoggedIn && favorites.includes(movie.id);
 
   const handleOpenModal = async () => {
@@ -49,28 +50,29 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onToggleFavorite, isUserLo
         <CardMedia
           component="img"
           image={movie.posterPath ? `https://image.tmdb.org/t/p/w500${movie.posterPath}` : 'https://via.placeholder.com/500x750?text=No+Image'}
-          alt={movie.title}
+          alt={movie.title}  
         />
         <CardContent className="movie-card-content">
-          <Tooltip title={movie.title} arrow>
-            <Typography className="movie-title" variant="h6">
-              {movie.title}
+            <Tooltip title={movie.title} arrow>
+              <Typography className="movie-title">{movie.title}</Typography>
+            </Tooltip>
+            <StarRating rating={movie.rating} />
+            <Typography className="movie-description">
+            {movie.description 
+              ? (movie.description.length > 100 
+                  ? `${movie.description.substring(0, 100)}...` 
+                  : movie.description) 
+              : 'Sem descrição disponível para o idioma.'}
             </Typography>
-          </Tooltip>
-          <Tooltip title={movie.description} arrow>
-            <Typography className="movie-description" variant="body2">
-              {movie.description ? movie.description : 'Sem descrição disponível para o idioma.'}
-            </Typography>
-          </Tooltip>
         </CardContent>
-        <Box className="action-buttons">
+        <CardFooter className="action-buttons">
           <IconButton onClick={handleOpenModal}>
-            <InfoIcon />
+            <InfoIcon className='more-info' />
           </IconButton>
           <IconButton onClick={() => onToggleFavorite(movie.id)}>
             <FavoriteIcon className={isFavorite ? 'favorite-icon favorite' : 'favorite-icon not-favorite'} />
           </IconButton>
-        </Box>
+        </CardFooter>
       </Card>
 
       {isModalOpen && (
@@ -82,5 +84,4 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onToggleFavorite, isUserLo
     </>
   );
 };
-
 export default MovieCard;

@@ -12,10 +12,9 @@ const SearchResults: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { handleAddToFavorites } = useFavorites();
   const location = useLocation();
+  const query = new URLSearchParams(location.search).get('query') || '';
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search).get('query') || '';
-
     if (query.trim() !== '') {
       const fetchMovies = async () => {
         setLoading(true);
@@ -35,7 +34,7 @@ const SearchResults: React.FC = () => {
 
   return (
     <div>
-      <h1>Search Results</h1>
+      <h1>Search Results for: {query}</h1>
       <div className="movie-list-container">
         {loading ? (
           <Box display="flex" justifyContent="center" alignItems="center" height="100vh">

@@ -72,23 +72,25 @@ namespace MovieAPI.Controllers {
                 return NotFound("Nenhum filme encontrado na lista de favoritos.");
             }
 
-            List<FavoriteMovieDTO> lstFavoriteMovieDTO = new List<FavoriteMovieDTO>();
+            List<MovieDetailDTO> lstFavoriteMovieDTO = new List<MovieDetailDTO>();
 
             foreach (FavoriteMovie Movies in FavoriteMovies) {
                 MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(Movies.MovieId);
                 if (movieDetails == null) {
                     continue;
                 }
-                FavoriteMovieDTO favoriteMovieDTO = new FavoriteMovieDTO {
-                    MovieId = movieDetails.Id,
+
+                MovieDetailDTO movieDetailDTO = new MovieDetailDTO {
+                    Id = movieDetails.Id,
                     Title = movieDetails.Title,
                     Description = movieDetails.Overview,
                     PosterPath = movieDetails.PosterPath,
+                    Rating = movieDetails.VoteAverage,
                     Date = movieDetails.ReleaseDate,
-                    Rating = movieDetails.VoteAverage
+                    Budget = movieDetails.Budget.ToString("N0"),
+                    BackdropPath = movieDetails.BackdropPath
                 };
-
-                lstFavoriteMovieDTO.Add(favoriteMovieDTO);
+                lstFavoriteMovieDTO.Add(movieDetailDTO);
             }
 
             return Ok(lstFavoriteMovieDTO);

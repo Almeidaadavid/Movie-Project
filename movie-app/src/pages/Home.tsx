@@ -32,12 +32,13 @@ const Home: React.FC = () => {
   return (
     <div>
       <main className="home-container">
-        <h1 className="home-title">Popular Movies</h1>
         {loading ? (
           <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
             <CircularProgress color="secondary" size={60} />
           </Box>
-        ) : <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} /> }
+        ) :
+        <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />  
+        }
       </main>
     </div>
   );

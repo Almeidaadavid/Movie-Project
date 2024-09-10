@@ -2,6 +2,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
+    background-color: #020617;
   }
   
   html, body {
@@ -20,7 +21,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background-color: #333;
+    background-color: #0f172a;
     color: #fff;
     padding: 10px 20px;
     display: flex;
@@ -37,5 +38,12 @@ body {
     flex: 1;
     overflow-y: auto;
     height: calc(100vh - 60px);
+  }
+
+  .heart-icon {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000;
   }
   
