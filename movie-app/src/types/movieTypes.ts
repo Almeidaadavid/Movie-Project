@@ -20,13 +20,6 @@ export interface Movie {
     total_pages: number;
     total_results: number;
   }
-
-  export interface FavoriteMovieDTO {
-    movieId: number;
-    title: string;
-    rating: number;
-    userId: number;
-  }
   
   export interface MovieDetailDTO {
     id: number;
@@ -36,4 +29,5 @@ export interface Movie {
     posterPath: string;
     rating: number;
     budget: number;
+    backdropPath: string | null;
   }

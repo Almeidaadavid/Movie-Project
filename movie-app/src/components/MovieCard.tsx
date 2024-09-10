@@ -33,6 +33,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onToggleFavorite, isUserLo
         posterPath: details.posterPath,
         rating: details.rating,
         budget: details.budget,
+        backdropPath: details.backdropPath        
       });
       setIsModalOpen(true);
     } catch (error) {

@@ -12,6 +12,7 @@ interface MovieDetailModalProps {
     posterPath: string;
     rating: number;
     budget: number;
+    backdropPath: string | null;
   } | null;
   onClose: () => void;
 }
@@ -20,19 +21,27 @@ const MovieDetailModal: React.FC<MovieDetailModalProps> = ({ movie, onClose }) =
   if (!movie) return null;
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay">
+    <div className="modal-overlay" >
       <div className="modal-content">
-        <button className="modal-close" onClick={onClose}>X</button>
-        <h2>{movie.title}</h2>
-        <img 
-          src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
-          alt={movie.title} 
-          className="modal-poster"
-        />
-        <p><BsCalendar2Date/> {movie.date}</p>
-        <p><FaStar/> {movie.rating}</p>
-        <p><FaDollarSign/><span>{movie.budget.toLocaleString()}</span></p>
-        <p>{movie.description ? movie.description : 'Sem descrição disponível para o idioma.'}</p>
+        <div className="modal-left">
+          <img 
+            src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
+            alt={movie.title} 
+            className="modal-poster"
+          />
+        </div>
+
+        <div className="modal-right">
+          <h2>{movie.title} <span><button className="modal-close" onClick={onClose}>X</button></span></h2>
+          <div className="modal-info">
+            <p><FaStar /> {movie.rating}</p>
+            <p><BsCalendar2Date /> {new Date(movie.date).toLocaleDateString()}</p>
+            <p><FaDollarSign /> {movie.budget.toLocaleString()}</p>
+          </div>
+          <p className="modal-description">
+            {movie.description ? movie.description : 'Sem descrição disponível para o idioma.'}
+          </p>
+        </div>
       </div>
     </div>,
     document.body
