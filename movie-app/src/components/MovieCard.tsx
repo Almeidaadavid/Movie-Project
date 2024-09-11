@@ -9,6 +9,7 @@ import { getMovieDetails } from '../services/movieService';
 import MovieDetailModal from './ModalMovieDetail';
 import StarRating from './StarRating';
 import { CardFooter } from 'reactstrap';
+import { IMAGE_BASE_URL, PLACEHOLDER_IMAGE_URL } from '../config'
 
 interface MovieCardProps {
   movie: MovieDetailDTO;
@@ -49,7 +50,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onToggleFavorite, isUserLo
       <Card className="movie-card">
         <CardMedia
           component="img"
-          image={movie.posterPath ? `https://image.tmdb.org/t/p/w500${movie.posterPath}` : 'https://via.placeholder.com/500x750?text=No+Image'}
+          image={movie.posterPath ? `${IMAGE_BASE_URL}${movie.posterPath}` : PLACEHOLDER_IMAGE_URL}
           alt={movie.title}  
         />
         <CardContent className="movie-card-content">

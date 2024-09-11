@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import '../styles/Modal.css';
 import { FaStar, FaDollarSign } from 'react-icons/fa';
 import { BsCalendar2Date } from "react-icons/bs";
+import { IMAGE_BASE_URL, PLACEHOLDER_IMAGE_URL } from '../config'
 
 interface MovieDetailModalProps {
   movie: {
@@ -24,7 +25,7 @@ const MovieDetailModal: React.FC<MovieDetailModalProps> = ({ movie, onClose }) =
       <div className="modal-content">
         <div className="modal-left">
           <img 
-            src={movie.posterPath ? `https://image.tmdb.org/t/p/w500${movie.posterPath}` : 'https://via.placeholder.com/500x750?text=No+Image'} 
+            src={movie.posterPath ? `${IMAGE_BASE_URL}${movie.posterPath}` : PLACEHOLDER_IMAGE_URL} 
             alt={movie.title} 
             className="modal-poster"
           />
