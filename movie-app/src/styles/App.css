@@ -55,3 +55,8 @@ body {
     gap: 20px;
     justify-content: center;
   }
+
+  .page-load-progress {
+    display:flex;
+    justify-content:center;
+  }

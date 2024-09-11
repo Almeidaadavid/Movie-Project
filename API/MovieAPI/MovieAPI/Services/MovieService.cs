@@ -10,13 +10,13 @@ namespace MovieAPI.Services {
             _httpClient = httpClientFactory.CreateClient("tmdb");
         }
 
-        public async Task<MovieSearchResponse?> SearchMoviesAsync(string Query) {
-            string? Url = $"search/movie?query={Query}&language=pt-BR";
+        public async Task<MovieSearchResponse?> SearchMoviesAsync(int page, string Query) {
+            string? Url = $"search/movie?query={Query}&language=pt-BR&page={page}";
             return await GetAsync<MovieSearchResponse>(Url);
         }
 
-        public async Task<MovieSearchResponse?> SearchPopularMoviesAsync() {
-            return await GetAsync<MovieSearchResponse>("movie/popular?language=pt-BR");
+        public async Task<MovieSearchResponse?> SearchPopularMoviesAsync(int page) {
+            return await GetAsync<MovieSearchResponse>($"movie/popular?page={page}&language=pt-BR");
         }
 
         public async Task<MovieDetails?> GetMovieDetailsAsync(int MovieId) {

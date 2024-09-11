@@ -8,3 +8,7 @@
     font-weight: bold;
   }
   
+  .pageloadprogress {
+    display:flex;
+    justify-content:center;
+  }

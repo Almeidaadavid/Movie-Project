@@ -19,7 +19,7 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpPost]
-        [Route("AddFavoriteMovie/{MovieID}")]
+        [Route("add-favorite-movie/{MovieID}")]
         public async Task<IActionResult> AddFavoriteMovie(int MovieID) {
             int? UserID = GetUserId();
             if (UserID == null) {
@@ -42,7 +42,7 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpDelete]
-        [Route("DeleteFavoriteMovie/{MovieID}")]
+        [Route("delete-favorite-movie/{MovieID}")]
         public async Task<IActionResult> DeleteFavoriteMovie(int MovieID) {
             int? UserID = GetUserId();
             if (UserID == null) {
@@ -59,7 +59,7 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpGet]
-        [Route("GetFavoriteMovies")]
+        [Route("get-favorite-movies")]
         public async Task<IActionResult> GetFavoriteMovies() {
             int? UserID = GetUserId();
             if (UserID == null) {
@@ -87,8 +87,7 @@ namespace MovieAPI.Controllers {
                     PosterPath = movieDetails.PosterPath,
                     Rating = movieDetails.VoteAverage,
                     Date = movieDetails.ReleaseDate,
-                    Budget = movieDetails.Budget.ToString("N0"),
-                    BackdropPath = movieDetails.BackdropPath
+                    Budget = movieDetails.Budget.ToString("N0")
                 };
                 lstFavoriteMovieDTO.Add(movieDetailDTO);
             }
