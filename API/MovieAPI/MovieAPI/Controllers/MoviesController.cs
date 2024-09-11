@@ -53,7 +53,7 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpGet]
-        [Route("get-movie-detail/{MovieID}")]
+        [Route("get-movie-details/{MovieID}")]
         public async Task<IActionResult> GetMovieDetails(int MovieID) {
             MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(MovieID);
             if (movieDetails == null) {
