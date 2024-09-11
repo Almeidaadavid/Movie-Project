@@ -46,4 +46,12 @@ body {
     right: 16px;
     z-index: 1000;
   }
+
   
+  .title {
+    color: #fff;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }

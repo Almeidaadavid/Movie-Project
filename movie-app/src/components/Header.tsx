@@ -41,14 +41,14 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
-      <h1 className="header-title">MovieApp</h1>
+      <h1 className="header-title">Filmes APP</h1>
       <nav className="header-nav">
         <Link to="/" onClick={ClearInput} className="nav-link">Início</Link>
         <div className="search-container">
           <input 
             type="text" 
             className="search-input"
-            placeholder="Search for movies..." 
+            placeholder="Busque pelos filmes..." 
             value={query}
             onChange={handleSearchChange}
           />
@@ -58,7 +58,7 @@ const Header: React.FC = () => {
         </div>
         {user ? (
           <>
-            <span className="nav-link">Hello, {user}</span>
+            <span className="nav-link">Olá, {user}</span>
             <Link to={"/favorites"} className="nav-link">Favoritos</Link>
             <Link to={"/"} onClick={handleLogout} className="nav-link">Sair</Link>
           </>

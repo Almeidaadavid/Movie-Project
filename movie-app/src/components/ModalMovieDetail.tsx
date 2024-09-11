@@ -12,7 +12,6 @@ interface MovieDetailModalProps {
     posterPath: string;
     rating: number;
     budget: number;
-    backdropPath: string | null;
   } | null;
   onClose: () => void;
 }
@@ -25,7 +24,7 @@ const MovieDetailModal: React.FC<MovieDetailModalProps> = ({ movie, onClose }) =
       <div className="modal-content">
         <div className="modal-left">
           <img 
-            src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`} 
+            src={movie.posterPath ? `https://image.tmdb.org/t/p/w500${movie.posterPath}` : 'https://via.placeholder.com/500x750?text=No+Image'} 
             alt={movie.title} 
             className="modal-poster"
           />

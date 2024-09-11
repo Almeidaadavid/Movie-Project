@@ -29,5 +29,4 @@ export interface Movie {
     posterPath: string;
     rating: number;
     budget: number;
-    backdropPath: string | null;
   }

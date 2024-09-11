@@ -59,7 +59,6 @@ const Register: React.FC = () => {
       <section className="form">
         <form onSubmit={handleSubmit} className="login-form">
           <h1>Cadastro de usuário</h1>
-          {error && <p className="error">{error}</p>}
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input

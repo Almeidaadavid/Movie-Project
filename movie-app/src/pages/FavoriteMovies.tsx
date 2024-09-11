@@ -38,19 +38,21 @@ const FavoriteMovies : React.FC = () => {
 
     return (
         <div>
-            <h1>Favorite Movies</h1>
-            <div className="movie-list-container">
+        <div className="movie-list-container">
             {loading ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
                 <CircularProgress color="secondary" size={60} />
             </Box>
             ) : movies.length > 0 ? (
-            <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />
+            <>
+                <h1 className='title'>Filmes favoritos</h1>
+                <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />
+            </>
             ) : (
-            <p>No movies found</p>
+            <p className='title'>Sem filmes encontrados.</p>
             )}
         </div>
-        </div>
+    </div>
     )
 }
 

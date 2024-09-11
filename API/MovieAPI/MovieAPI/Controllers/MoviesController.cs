@@ -65,8 +65,7 @@ namespace MovieAPI.Controllers {
                 PosterPath = movieDetails.PosterPath,
                 Rating = movieDetails.VoteAverage,
                 Date = movieDetails.ReleaseDate,
-                Budget = movieDetails.Budget.ToString("N0"),
-                BackdropPath = movieDetails.BackdropPath
+                Budget = movieDetails.Budget.ToString("N0")
             };
             return Ok(movieDetailDTO);
         }

@@ -7,6 +7,5 @@
         public string Date { get; set; }
         public double Rating { get; set; }
         public string Budget { get; set; }
-        public string BackdropPath { get; set; }
     }
 }

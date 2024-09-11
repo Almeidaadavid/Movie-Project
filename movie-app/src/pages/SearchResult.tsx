@@ -34,16 +34,18 @@ const SearchResults: React.FC = () => {
 
   return (
     <div>
-      <h1>Search Results for: {query}</h1>
       <div className="movie-list-container">
         {loading ? (
           <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
             <CircularProgress color="secondary" size={60} />
           </Box>
         ) : movies.length > 0 ? (
-          <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />
+          <>
+            <h1 className='title'>Resultado de pesquisa para: {query}</h1>
+            <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />
+          </>
         ) : (
-          <p>No movies found</p>
+          <p className='title'>Sem filmes encontrados</p>
         )}
       </div>
     </div>
