@@ -16,7 +16,7 @@ namespace MovieAPI.Controllers {
             _jwtService = jwtService;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO UserDTO) {
             User User = new User(UserDTO.Username, BCrypt.Net.BCrypt.HashPassword(UserDTO.Password),UserDTO.Email);
             User? Credentials = await _userRepository.GetUserByUsernameAndEmail(UserDTO.Username, UserDTO.Email);
@@ -37,7 +37,7 @@ namespace MovieAPI.Controllers {
             }            
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO Login) {
             User? User = await _userRepository.GetUserByUsername(Login.Username);
             if (User == null) {
