@@ -101,7 +101,10 @@ namespace MovieAPI {
         private static void LoadEnvironmentVariables(ConfigurationManager configuration) {
             string? ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
             string? JwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+            string? JwtIssuerKey = Environment.GetEnvironmentVariable("JWT_ISSUER_KEY");
+            string? JwtAudienceKey = Environment.GetEnvironmentVariable("JWT_AUDIENCE_KEY");
             string? TmdbApiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
+            string? TmdbUrlBase = Environment.GetEnvironmentVariable("TMDB_URL_BASE") ?? "https://api.themoviedb.org/3";
 
             if (string.IsNullOrWhiteSpace(ConnectionString)) {
                 throw new InvalidOperationException("The environment variable CONNECTION_STRING was not found or is empty.");
@@ -111,13 +114,28 @@ namespace MovieAPI {
                 throw new InvalidOperationException("The environment variable JWT_KEY was not found or is empty.");
             }
 
+            if (string.IsNullOrWhiteSpace(JwtIssuerKey)) {
+                throw new InvalidOperationException("The environment variable JWT_ISSUER_KEY was not found or is empty.");
+            }
+
+            if (string.IsNullOrWhiteSpace(JwtAudienceKey)) {
+                throw new InvalidOperationException("The environment variable JWT_AUDIENCE_KEY was not found or is empty.");
+            }
+
             if (string.IsNullOrWhiteSpace(TmdbApiKey)) {
                 throw new InvalidOperationException("The environment variable TMDB_API_KEY was not found or is empty.");
+            }
+            
+            if (string.IsNullOrWhiteSpace(TmdbUrlBase)) {
+                throw new InvalidOperationException("The environment variable TMDB_URL_BASE was not found or is empty.");
             }
 
             configuration["ConnectionStrings:DefaultConnection"] = ConnectionString;
             configuration["Jwt:Key"] = JwtKey;
+            configuration["Jwt:Issuer"] = JwtIssuerKey;
+            configuration["Jwt:Audience"] = JwtAudienceKey;
             configuration["TMDb:ApiKey"] = TmdbApiKey;
+            configuration["TMDb:BaseUrl"] = TmdbUrlBase;
         }
     }
 }
