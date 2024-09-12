@@ -4,18 +4,18 @@ import '../styles/Login.css';
 import { performLogin } from '../services/loginService';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
+import {useFavorites} from '../context/FavoriteContext';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const {loadFavorites} = useFavorites();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
     
     if (password.length < 6) {
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     }
 
     try {
-      let success = await performLogin(username, password, setUser);
+      let success = await performLogin(username, password, setUser, loadFavorites);
       if (!success) {
         return;
       }

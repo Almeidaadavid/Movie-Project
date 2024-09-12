@@ -1,4 +1,5 @@
 
+using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,8 @@ namespace MovieAPI {
     public class Program {
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
+            DotEnv.Load();
+            LoadEnvironmentVariables(builder.Configuration);
 
             builder.Services.AddDbContext<AppDbContext>(options => {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -65,18 +68,15 @@ namespace MovieAPI {
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IFavoriteMovieRepository, FavoriteMovieRepository>();
 
-            // Add services to the container.
             builder.Services.AddScoped<JwtService>();
             builder.Services.AddScoped<MovieService>();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment()) {
                 app.UseSwagger();
                 app.UseSwaggerUI();
@@ -96,6 +96,28 @@ namespace MovieAPI {
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void LoadEnvironmentVariables(ConfigurationManager configuration) {
+            string? ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            string? JwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+            string? TmdbApiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
+
+            if (string.IsNullOrWhiteSpace(ConnectionString)) {
+                throw new InvalidOperationException("The environment variable CONNECTION_STRING was not found or is empty.");
+            }
+
+            if (string.IsNullOrWhiteSpace(JwtKey)) {
+                throw new InvalidOperationException("The environment variable JWT_KEY was not found or is empty.");
+            }
+
+            if (string.IsNullOrWhiteSpace(TmdbApiKey)) {
+                throw new InvalidOperationException("The environment variable TMDB_API_KEY was not found or is empty.");
+            }
+
+            configuration["ConnectionStrings:DefaultConnection"] = ConnectionString;
+            configuration["Jwt:Key"] = JwtKey;
+            configuration["TMDb:ApiKey"] = TmdbApiKey;
         }
     }
 }

@@ -7,7 +7,7 @@ using MovieAPI.Services;
 namespace MovieAPI.Controllers {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase {
         private readonly IUserRepository _userRepository;
         private readonly JwtService _jwtService;
@@ -31,7 +31,7 @@ namespace MovieAPI.Controllers {
 
             try {
                 await _userRepository.AddUser(User);
-                return Ok(new { message = "Usuário criado com sucesso." });
+                return Ok(new { message = "Usuário criado com sucesso." , success = true});
             } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }            

@@ -5,6 +5,7 @@ import '../styles/Login.css';
 import { toast } from 'react-toastify';
 import { performLogin } from '../services/loginService';
 import { useAuth } from '../context/AuthContext';
+import {useFavorites} from '../context/FavoriteContext';
 
 
 const Register: React.FC = () => {
@@ -15,6 +16,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const {loadFavorites} = useFavorites();
   
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -41,14 +43,18 @@ const Register: React.FC = () => {
       const response = await register({ username, password, email });
       if (response.success) {
         toast.success('Cadastro realizado com sucesso!');
-        let success = await performLogin(username, password, setUser);
+        let success = await performLogin(username, password, setUser, loadFavorites, true);
         if (!success) {
             return;
         }
         navigate("/");
       }
-    } catch (error) {
-      toast.error('Erro ao realizar Cadastro. Verifique suas credenciais.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro ao realizar cadastro.');
+      }
     } finally {
       setIsLoading(false);
     }

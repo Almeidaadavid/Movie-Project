@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace MovieAPI.Controllers {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/movies")]
     public class MoviesController : ControllerBase {
         private readonly MovieService _movieService;
 
@@ -53,9 +53,9 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpGet]
-        [Route("get-movie-details/{MovieID}")]
-        public async Task<IActionResult> GetMovieDetails(int MovieID) {
-            MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(MovieID);
+        [Route("get-movie-details/{movieID}")]
+        public async Task<IActionResult> GetMovieDetails(int movieID) {
+            MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(movieID);
             if (movieDetails == null) {
                 return NotFound();
             }

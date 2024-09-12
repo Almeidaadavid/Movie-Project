@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace MovieAPI.Controllers {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/favorite-movies")]
     [Authorize]
     public class FavoriteMovieController : ControllerBase {
         private readonly IFavoriteMovieRepository _favoriteMovieRepository;
@@ -19,19 +19,19 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpPost]
-        [Route("add-favorite-movie/{MovieID}")]
-        public async Task<IActionResult> AddFavoriteMovie(int MovieID) {
+        [Route("add-favorite-movie/{movieID}")]
+        public async Task<IActionResult> AddFavoriteMovie(int movieID) {
             int? UserID = GetUserId();
             if (UserID == null) {
                 return Unauthorized();
             }
 
-            MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(MovieID);
+            MovieDetails? movieDetails = await _movieService.GetMovieDetailsAsync(movieID);
             if (movieDetails == null) {
                 return NotFound("Filme não encontrado na API do TMDb.");
             }
 
-            FavoriteMovie? ExistingFavorite = await _favoriteMovieRepository.GetFavoriteByMovieIdAndUserId(MovieID, UserID.Value);
+            FavoriteMovie? ExistingFavorite = await _favoriteMovieRepository.GetFavoriteByMovieIdAndUserId(movieID, UserID.Value);
             if (ExistingFavorite != null) {
                 return BadRequest("Esse filme já está na lista de favoritos.");
             }
@@ -42,14 +42,14 @@ namespace MovieAPI.Controllers {
         }
 
         [HttpDelete]
-        [Route("delete-favorite-movie/{MovieID}")]
-        public async Task<IActionResult> DeleteFavoriteMovie(int MovieID) {
+        [Route("delete-favorite-movie/{movieID}")]
+        public async Task<IActionResult> DeleteFavoriteMovie(int movieID) {
             int? UserID = GetUserId();
             if (UserID == null) {
                 return Unauthorized();
             }
 
-            FavoriteMovie? FavoriteMovie = await _favoriteMovieRepository.GetFavoriteByMovieIdAndUserId(MovieID, UserID.Value);
+            FavoriteMovie? FavoriteMovie = await _favoriteMovieRepository.GetFavoriteByMovieIdAndUserId(movieID, UserID.Value);
             if (FavoriteMovie == null) {
                 return NotFound("O filme não está na lista de favoritos.");
             }
@@ -93,6 +93,20 @@ namespace MovieAPI.Controllers {
             }
 
             return Ok(lstFavoriteMovieDTO);
+        }
+
+        [HttpGet]
+        [Route("fetch-favorite-movie")]
+        public async Task<IActionResult> GetFavoriteMoviesID() {
+            int? UserID = GetUserId();
+            if (UserID == null) {
+                return Unauthorized();
+            }
+
+            List<FavoriteMovie> lstFavoriteMovies = await _favoriteMovieRepository.GetFavoriteMovies(UserID.Value);
+
+            List<int> lstFavoriteMoviesID = lstFavoriteMovies.ConvertAll(x => x.MovieId);
+            return Ok(lstFavoriteMoviesID);
         }
 
         private int? GetUserId() {

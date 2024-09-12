@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
+import {useFavorites} from '../context/FavoriteContext'
 import '../styles/Header.css';
 
 const Header: React.FC = () => {
   const [query, setQuery] = useState("");
   const { user, setUser } = useAuth();
+  const { clearFavorites } = useFavorites();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +33,7 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
+    clearFavorites();
     setUser(null);
     navigate('/');
   };

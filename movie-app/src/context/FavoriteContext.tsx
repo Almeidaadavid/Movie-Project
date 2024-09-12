@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { addFavoriteMovie, removeFavoriteMovie } from '../services/movieService';
+import { addFavoriteMovie, removeFavoriteMovie, fetchFavoriteMovies } from '../services/movieService';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 interface FavoritesContextProps {
     favorites: number[];
     handleAddToFavorites: (movieId: number) => Promise<void>;
+    loadFavorites: () => Promise<void>;
+    clearFavorites: () => void;
 }
 
 const FavoritesContext = createContext<FavoritesContextProps | undefined>(undefined);
@@ -14,16 +16,29 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const [favorites, setFavorites] = useState<number[]>([]);
 
     useEffect(() => {
-        const storedFavorites = localStorage.getItem('favoriteMovies');
-        if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites));
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            loadFavorites();
         }
     }, []);
 
+    const loadFavorites = async () => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            try {
+                const data = await fetchFavoriteMovies();
+                setFavorites(data);
+                localStorage.setItem('favoriteMovies', JSON.stringify(data));
+            } catch (error) {
+                console.error('Erro ao carregar filmes favoritos:', error);
+            }
+        }
+    };
+
     const handleAddToFavorites = async (movieId: number) => {
-        const Token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('authToken');
         try {
-            if (!Token) {
+            if (!token) {
                 toast.error('É necessário estar logado para adicionar um filme aos favoritos');
                 return;
             }
@@ -54,8 +69,13 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         }
     };
 
+    const clearFavorites = () => {
+        setFavorites([]);
+        localStorage.removeItem('favoriteMovies');
+    };
+
     return (
-        <FavoritesContext.Provider value={{ favorites, handleAddToFavorites }}>
+        <FavoritesContext.Provider value={{ favorites, handleAddToFavorites, loadFavorites, clearFavorites }}>
             {children}
         </FavoritesContext.Provider>
     );

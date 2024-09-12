@@ -43,16 +43,22 @@ export const getPopularMovies = async(page: number): Promise<MovieDetailDTO[]> =
   };
 
   export const addFavoriteMovie = async (movieId: number) => {
-    const response = await api.post(`/favoritemovie/add-favorite-movie/${movieId}`);
+    const response = await api.post(`/favorite-movies/add-favorite-movie/${movieId}`);
     return response.data;
   };
 
   export const removeFavoriteMovie = async (movieId: number) => {
-    const response = await api.delete(`/favoritemovie/delete-favorite-movie/${movieId}`);
+    const response = await api.delete(`/favorite-movies/delete-favorite-movie/${movieId}`);
     return response.data;
   };
 
   export const getFavoriteMovies = async(): Promise<MovieDetailDTO[]> => {
-    const response = await api.get('/favoritemovie/get-favorite-movies');
+    const response = await api.get('/favorite-movies/get-favorite-movies');
+    return response.data;
+  }
+
+
+  export const fetchFavoriteMovies = async (): Promise<number[]> => {
+    const response = await api.get('/favorite-movies/fetch-favorite-movie');
     return response.data;
   }
