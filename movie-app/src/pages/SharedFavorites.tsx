@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { getFavoriteMovies } from '../services/movieService';
+import { useParams } from 'react-router-dom';
 import { MovieDetailDTO } from '../types/movieTypes';
 import MovieList from '../components/MovieList';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useFavorites } from '../context/FavoriteContext';
-import { useNavigate } from 'react-router-dom';
-import ShareFavoritesButton from '../components/ShareFavoriteMoviesButton';
+import {GetFavoritesWithToken} from '../services/shareFavorite'
 
-const FavoriteMovies: React.FC = () => {
+const SharedFavorites: React.FC = () => {
+    const { token } = useParams<{ token: string }>();
     const [movies, setMovies] = useState<MovieDetailDTO[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const { favorites, handleAddToFavorites } = useFavorites();
-    const navigate = useNavigate();
+    const { handleAddToFavorites } = useFavorites();
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-
-        if (!token) {
-            navigate('/');
-            return;
-        }
-
-        const getMovies = async () => {
+        const fetchFavorites = async () => {
             setLoading(true);
             try {
-                const data = await getFavoriteMovies();
+                const data = await GetFavoritesWithToken(token);
                 setMovies(data);
             } catch (error) {
-                console.error('Error fetching search results:', error);
+                console.error('Erro ao buscar favoritos compartilhados:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        getMovies();
-
-    }, [favorites]);
+        fetchFavorites();
+    }, [token]);
 
     return (
         <div>
@@ -47,16 +38,15 @@ const FavoriteMovies: React.FC = () => {
                     </Box>
                 ) : movies.length > 0 ? (
                     <>
-                        <ShareFavoritesButton />
-                        <h1 className='title'>Filmes favoritos</h1>
+                        <h1 className='title'>Filmes Favoritos Compartilhados</h1>
                         <MovieList movies={movies} onAddToFavorites={handleAddToFavorites} />
                     </>
                 ) : (
-                    <p className='title'>Sem filmes encontrados.</p>
+                    <p className='title'>Nenhum filme encontrado.</p>
                 )}
             </div>
         </div>
     );
 };
 
-export default FavoriteMovies;
+export default SharedFavorites;

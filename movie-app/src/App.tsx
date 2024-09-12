@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import FavoriteMovies from './pages/FavoriteMovies';
 import Register from './pages/Register'
 import Header from "./components/Header";
+import SharedFavorites from "./pages/SharedFavorites";
 import { FavoritesProvider } from "./context/FavoriteContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from 'react-toastify';
@@ -26,6 +27,7 @@ const App: React.FC = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/favorites" element={<FavoriteMovies />} />
+                <Route path="/shared-favorites/:token" element={<SharedFavorites />} />
               </Routes>
             </main>
             <ToastContainer />

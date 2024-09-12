@@ -71,6 +71,7 @@ namespace MovieAPI {
             builder.Services.AddScoped<JwtService>();
             builder.Services.AddScoped<MovieService>();
 
+            builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

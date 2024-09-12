@@ -117,8 +117,13 @@ O arquivo `appsettings.json` deve estar configurado da seguinte forma para garan
 - **dotenv.net**: Para carregar variáveis de ambiente a partir de um arquivo `.env`.
 - **Microsoft.AspNetCore.Authentication.JwtBearer**: Configura a autenticação JWT no ASP.NET Core.
 - **Microsoft.EntityFrameworkCore**: ORM para interagir com o banco de dados e gerenciar migrations.
+- **Microsoft.Extensions.Caching.Memory**: Para controle de cache, utilizado ao compartilhar a lista de favoritos.
 - **Newtonsoft.Json**: Biblioteca popular para manipulação de JSON.
 - **Swashbuckle.AspNetCore**: Para documentação Swagger da API.
+
+### Solução de Problemas Comuns
+
+- **Cache da lista de favoritos expira após o primeiro uso**: Um possível problema ocorre quando o cache do usuário expira logo após o primeiro acesso à lista compartilhada de favoritos. Isso impede que a lista seja acessada novamente. Para solucionar esse problema de forma mais eficiente, uma alternativa seria armazenar o token de acesso no banco de dados, permitindo que o acesso à lista de favoritos seja controlado por um período definido. Após esse período, uma rotina de limpeza pode ser configurada para remover tokens expirados, garantindo uma melhor experiência do usuário e maior controle sobre os dados compartilhados.
 
 ### Frontend
 
